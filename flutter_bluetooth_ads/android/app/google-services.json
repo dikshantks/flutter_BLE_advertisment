@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "903798399861",
+    "project_id": "my-second-project-c7122",
+    "storage_bucket": "my-second-project-c7122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903798399861:android:6964e9bb79fba8ee0b693c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_bluetooth_ads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903798399861-koq998pia9ce997bevf4avks8m8i0v2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_JwNejJDV8M0DHAln1BBnGpHyB7uQCBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903798399861-koq998pia9ce997bevf4avks8m8i0v2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
