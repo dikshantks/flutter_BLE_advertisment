@@ -4,7 +4,7 @@ A flutter app using BLE devices to navigate and advetise , Right now only works 
 
 
 
-#packages used
+# packages used
   * flutter_blue
   * panorama
   * permission_handler
