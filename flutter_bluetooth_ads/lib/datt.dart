@@ -168,18 +168,45 @@ class _CR202State extends State<CR202> {
   }
 }
 
-class Eror extends StatefulWidget {
-  const Eror({super.key});
+class Nothinginit extends StatefulWidget {
+  const Nothinginit({super.key});
 
   @override
-  State<Eror> createState() => _ErorState();
+  State<Nothinginit> createState() => _NothinginitState();
 }
 
-class _ErorState extends State<Eror> {
+class _NothinginitState extends State<Nothinginit> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text("THIS IS NOT OUR BEACON")),
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      child: Center(
+          child: Container(
+        height: 300.0,
+        width: 250.0,
+        // color: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              // color: Colors.red,
+              height: 200.0,
+              width: 200.0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(400.0)),
+                child: Image.asset(
+                  "assets/cr12.jpeg",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Text(
+              "\n Nothing to see here.",
+              style: TextStyle(fontSize: 25.0),
+            ),
+          ],
+        ),
+      )),
     );
   }
 }

@@ -65,15 +65,34 @@ class FirstPageState extends State<FirstPage> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
+  Future<bool> ispresent() async {
+    FlutterBlue flutterBlue = FlutterBlue.instance;
+
+    bool isthere = false;
+
+    flutterBlue.startScan(timeout: Duration(seconds: 4));
+
+// Listen to scan results
+    var subscription = flutterBlue.scanResults;
+
+    if (await subscription.isEmpty) {
+      isthere = false;
+    } else {
+      isthere = true;
+    }
+
+    return isthere;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       endDrawer: Drawer(
+        // shape: ShapeBorder(),
         backgroundColor: Colors.black,
         child: Column(
           children: [
             const DrawerHeader(
-              curve: Curves.bounceIn,
               child: Center(child: Text("BEACON \n MAP")),
             ),
             Expanded(
@@ -125,6 +144,21 @@ class FirstPageState extends State<FirstPage> {
         ),
       ),
       appBar: AppBar(
+        foregroundColor: Color(0xff030027),
+
+        // leading: ,
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.amber,
+              child: Text("\n Hello \n ${widget.user}"),
+            ),
+            preferredSize: Size.fromHeight(150.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(100.0),
+            bottomLeft: Radius.circular(100.0),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.map),
@@ -134,89 +168,92 @@ class FirstPageState extends State<FirstPage> {
           ),
         ],
         automaticallyImplyLeading: false,
-        title: Text("Hi,${widget.user}"),
+        // title: Text("\n Hello \n ${widget.user}"),
         centerTitle: true,
       ),
       floatingActionButton: FloatButtn(),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            StreamBuilder<List<ScanResult>>(
-              stream: FlutterBlue.instance.scanResults,
-              initialData: [],
-              builder: (context, snapshot) => Column(
-                children: snapshot.data!.map((d) {
-                  if (d.device.type == BluetoothDeviceType.le &&
-                      d.rssi.abs() < 80) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => DeviceScreen(
-                                  device: d.device,
-                                  data: one[d.device.name]!,
-                                )),
-                          ),
-                        );
-                      },
-                      child: ListTile(
-                        title: d.device.type == BluetoothDeviceType.le
-                            ? Text(d.device.name)
-                            : Text(d.device.id.toString()),
-                        leading: Text(d.rssi.toString()),
-                        trailing: ElevatedButton(
-                          child: Text("connect"),
-                          onPressed: () async {
-                            setState(() {
-                              col[d.device.name] = true;
-                            });
-
-                            try {
-                              d.device.connect();
-                              createdata(addData: d);
-                              await service.showNotification(
-                                  id: 0,
-                                  title: "connected",
-                                  body:
-                                      "you are connected to ${d.device.name}. \n EXPLORE!!!");
-                              // ignore: use_build_context_synchronously
+        child: true
+            ? Nothinginit()
+            : Column(
+                children: [
+                  StreamBuilder<List<ScanResult>>(
+                    stream: FlutterBlue.instance.scanResults,
+                    initialData: [],
+                    builder: (context, snapshot) => Column(
+                      children: snapshot.data!.map((d) {
+                        if (d.device.type == BluetoothDeviceType.le &&
+                            d.rssi.abs() < 80) {
+                          return GestureDetector(
+                            onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: ((context) => DeviceScreen(
                                         device: d.device,
-                                        data: one.containsKey(d.device.name)
-                                            ? one[d.device.name]!
-                                            : Eror(),
+                                        data: one[d.device.name]!,
                                       )),
                                 ),
                               );
-                            } on PlatformException catch (e) {
-                              print(e);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                }).toList(),
+                            },
+                            child: ListTile(
+                              title: d.device.type == BluetoothDeviceType.le
+                                  ? Text(d.device.name)
+                                  : Text(d.device.id.toString()),
+                              leading: Text(d.rssi.toString()),
+                              trailing: ElevatedButton(
+                                child: Text("connect"),
+                                onPressed: () async {
+                                  setState(() {
+                                    col[d.device.name] = true;
+                                  });
+
+                                  try {
+                                    d.device.connect();
+                                    createdata(addData: d);
+                                    await service.showNotification(
+                                        id: 0,
+                                        title: "connected",
+                                        body:
+                                            "you are connected to ${d.device.name}. \n EXPLORE!!!");
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: ((context) => DeviceScreen(
+                                              device: d.device,
+                                              data:
+                                                  one.containsKey(d.device.name)
+                                                      ? one[d.device.name]!
+                                                      : Nothinginit(),
+                                            )),
+                                      ),
+                                    );
+                                  } on PlatformException catch (e) {
+                                    print(e);
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }).toList(),
+                    ),
+                  ),
+                  const Divider(
+                    indent: 10.0,
+                    endIndent: 10.0,
+                    height: 20.0,
+                    thickness: 1.0,
+                    color: Colors.black45,
+                  ),
+                  Connected(one: one),
+                ],
               ),
-            ),
-            const Divider(
-              indent: 10.0,
-              endIndent: 10.0,
-              height: 20.0,
-              thickness: 1.0,
-              color: Colors.black45,
-            ),
-            Connected(one: one),
-          ],
-        ),
       ),
     );
   }
@@ -276,7 +313,7 @@ class Connected extends StatelessWidget {
                               device: d,
                               data: one.containsKey(d.name)
                                   ? one[d.name]!
-                                  : Eror(),
+                                  : Nothinginit(),
                             )),
                       ),
                     );
