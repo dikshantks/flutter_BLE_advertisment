@@ -5,10 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:flutter_blue/flutter_blue.dart";
-import 'package:flutter_blue/gen/flutterblue.pbjson.dart';
+// import 'package:flutter_blue/gen/flutterblue.pbjson.dart';
 import 'package:flutter_bluetooth_ads/datt.dart';
 import 'package:flutter_bluetooth_ads/localnotification.dart';
-import 'package:flutter_bluetooth_ads/main.dart';
+// import 'package:flutter_bluetooth_ads/main.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'device.dart';
@@ -51,9 +51,14 @@ class FirstPageState extends State<FirstPage> {
     "Sinusoid": CR202(),
   };
   Map<String, String> Panora_img = {
-    "Maingate": "assets/oen.jpg",
-    "ECE-Lab1": "assets/thomas-galler-8UDJ4sflous-unsplash.jpg",
-    "Sinusoid": "assets/oen.jpg",
+    "Maingate": "assets/maingate.jpg",
+    "ECE-Lab1": "assets/80.jpg",
+    "Sinusoid": "assets/sijnu.jpg",
+  };
+  Map<String, String> intro_img = {
+    "Maingate": "assets/maingate.jpg",
+    "ECE-Lab1": "assets/80.jpg",
+    "Sinusoid": "assets/sijnu.jpg",
   };
 
   Map<String, bool> col = {
@@ -75,10 +80,13 @@ class FirstPageState extends State<FirstPage> {
 // Listen to scan results
     var subscription = flutterBlue.scanResults;
 
-    if (await subscription.isEmpty) {
-      isthere = false;
-    } else {
+    if (await subscription.any(
+      (element) => element.any((element) =>
+          element.device.type == BluetoothDeviceType.le ? false : true),
+    )) {
       isthere = true;
+    } else {
+      isthere = false;
     }
 
     return isthere;
@@ -92,8 +100,47 @@ class FirstPageState extends State<FirstPage> {
         backgroundColor: Colors.black,
         child: Column(
           children: [
-            const DrawerHeader(
-              child: Center(child: Text("BEACON \n MAP")),
+            DrawerHeader(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text("Beacon \n  Map"),
+                  Container(
+                    // color: Colors.blue,
+                    height: 50.0,
+                    // child: GridView.count(
+                    //   primary: false,
+                    //   mainAxisSpacing: 10.0,
+                    //   crossAxisSpacing: 10.0,
+                    //   crossAxisCount: 3,
+                    //   children: [
+                    //     Container(
+                    //       height: 10.0,
+                    //       width: 30.0,
+                    //       color: Colors.yellow,
+                    //       // child: ElevatedButton(
+                    //       //   onPressed: () {},
+                    //       //   child: Text("Sinusoid"),
+                    //       // ),
+                    //     ),
+
+                    //     SizedBox(
+                    //       height: 20.0,
+                    //       width: 10.0,
+                    //       child: ElevatedButton(
+                    //           onPressed: () {}, child: Text("Sinusoid")),
+                    //     ),
+                    //     Container(
+                    //       height: 20.0,
+                    //       width: 30.0,
+                    //       child: ElevatedButton(
+                    //           onPressed: () {}, child: Text("Sinusoid")),
+                    //     ),
+                    //   ],
+                    // ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Container(
@@ -105,7 +152,7 @@ class FirstPageState extends State<FirstPage> {
                     SizedBox(
                       // color: Colors.red,
                       width: 300.0,
-                      height: 750.0,
+                      height: 700.0,
                       child: Image.asset(
                         'assets/index.jpeg',
                         fit: BoxFit.fitHeight,
@@ -144,19 +191,47 @@ class FirstPageState extends State<FirstPage> {
         ),
       ),
       appBar: AppBar(
-        foregroundColor: Color(0xff030027),
-
-        // leading: ,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            // minRadius: 10.0,
+            foregroundColor: Colors.blueAccent,
+            backgroundImage: AssetImage("assets/cutee.gif"),
+          ),
+        ),
+        // foregroundColor: Color(0xff030027),
+        title: Container(
+          // color: Colors.amber,
+          margin: EdgeInsets.only(top: 50.0),
+          // child: Text("\n Hello \n ${widget.user}"),
+        ),
         bottom: PreferredSize(
-            child: Container(
-              color: Colors.amber,
-              child: Text("\n Hello \n ${widget.user}"),
-            ),
-            preferredSize: Size.fromHeight(150.0)),
+          preferredSize: Size.fromHeight(100.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Welcome",
+                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "${widget.user}",
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+              SizedBox(
+                height: 50.0,
+              )
+            ],
+          ),
+        ),
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(100.0),
-            bottomLeft: Radius.circular(100.0),
+            bottomRight: Radius.circular(50.0),
+            bottomLeft: Radius.circular(50.0),
           ),
         ),
         actions: [
@@ -173,87 +248,90 @@ class FirstPageState extends State<FirstPage> {
       ),
       floatingActionButton: FloatButtn(),
       body: SingleChildScrollView(
-        child: true
-            ? Nothinginit()
-            : Column(
-                children: [
-                  StreamBuilder<List<ScanResult>>(
-                    stream: FlutterBlue.instance.scanResults,
-                    initialData: [],
-                    builder: (context, snapshot) => Column(
-                      children: snapshot.data!.map((d) {
-                        if (d.device.type == BluetoothDeviceType.le &&
-                            d.rssi.abs() < 80) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => DeviceScreen(
-                                        device: d.device,
-                                        data: one[d.device.name]!,
-                                      )),
-                                ),
-                              );
-                            },
-                            child: ListTile(
-                              title: d.device.type == BluetoothDeviceType.le
-                                  ? Text(d.device.name)
-                                  : Text(d.device.id.toString()),
-                              leading: Text(d.rssi.toString()),
-                              trailing: ElevatedButton(
-                                child: Text("connect"),
-                                onPressed: () async {
-                                  setState(() {
-                                    col[d.device.name] = true;
-                                  });
-
-                                  try {
-                                    d.device.connect();
-                                    createdata(addData: d);
-                                    await service.showNotification(
-                                        id: 0,
-                                        title: "connected",
-                                        body:
-                                            "you are connected to ${d.device.name}. \n EXPLORE!!!");
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: ((context) => DeviceScreen(
-                                              device: d.device,
-                                              data:
-                                                  one.containsKey(d.device.name)
-                                                      ? one[d.device.name]!
-                                                      : Nothinginit(),
-                                            )),
-                                      ),
-                                    );
-                                  } on PlatformException catch (e) {
-                                    print(e);
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
+        child: Column(
+          children: [
+            StreamBuilder<List<ScanResult>>(
+              stream: FlutterBlue.instance.scanResults,
+              // initialData: [],
+              builder: (context, snapshot) => Column(
+                children: snapshot.data?.map((d) {
+                      if (d.device.type == BluetoothDeviceType.le &&
+                          d.rssi.abs() < 100) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: ((context) => DeviceScreen(
+                                      name: intro_img[d.device.name],
+                                      device: d.device,
+                                      data: one[d.device.name]!,
+                                    )),
                               ),
+                            );
+                          },
+                          child: ListTile(
+                            title: d.device.type == BluetoothDeviceType.le
+                                ? Text(d.device.name)
+                                : Text(d.device.id.toString()),
+                            leading: Text(d.rssi.toString()),
+                            trailing: ElevatedButton(
+                              child: Text("connect"),
+                              onPressed: () async {
+                                setState(() {
+                                  col[d.device.name] = true;
+                                });
+
+                                try {
+                                  d.device.connect();
+                                  createdata(addData: d);
+                                  await service.showNotification(
+                                      id: 0,
+                                      title: "connected",
+                                      body:
+                                          "you are connected to ${d.device.name}. \n EXPLORE!!!");
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) => DeviceScreen(
+                                            name: intro_img[d.device.name]!,
+                                            device: d.device,
+                                            data: one.containsKey(d.device.name)
+                                                ? one[d.device.name]!
+                                                : Nothinginit(),
+                                          )),
+                                    ),
+                                  );
+                                } on PlatformException catch (e) {
+                                  print(e);
+                                } catch (e) {
+                                  print(e);
+                                }
+                              },
                             ),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }).toList(),
-                    ),
-                  ),
-                  const Divider(
-                    indent: 10.0,
-                    endIndent: 10.0,
-                    height: 20.0,
-                    thickness: 1.0,
-                    color: Colors.black45,
-                  ),
-                  Connected(one: one),
-                ],
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }).toList() ??
+                    [],
               ),
+            ),
+            const Divider(
+              indent: 10.0,
+              endIndent: 10.0,
+              height: 20.0,
+              thickness: 1.0,
+              color: Colors.black45,
+            ),
+            Connected(
+              one: one,
+              two: intro_img,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -291,9 +369,11 @@ class Connected extends StatelessWidget {
   const Connected({
     Key? key,
     required this.one,
+    required this.two,
   }) : super(key: key);
 
   final Map<String, Widget> one;
+  final Map<String, String> two;
 
   @override
   Widget build(BuildContext context) {
@@ -310,6 +390,7 @@ class Connected extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: ((context) => DeviceScreen(
+                              name: two[d.name]!,
                               device: d,
                               data: one.containsKey(d.name)
                                   ? one[d.name]!
@@ -320,7 +401,7 @@ class Connected extends StatelessWidget {
                   },
                   child: ListTile(
                     title: Text(d.name),
-                    leading: Text(d.type.name),
+                    // leading: Text(">"),
                     trailing: ElevatedButton(
                       child: Text("disconnect"),
                       onPressed: () {

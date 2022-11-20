@@ -34,11 +34,12 @@ class BluetoothOffScreen extends StatelessWidget {
 }
 
 class DeviceScreen extends StatefulWidget {
-  const DeviceScreen({Key? key, required this.device, required this.data})
+  const DeviceScreen(
+      {Key? key, required this.device, required this.data, required this.name})
       : super(key: key);
 
   final BluetoothDevice device;
-
+  final String? name;
   final Widget data;
 
   @override
@@ -54,42 +55,62 @@ class _DeviceScreenState extends State<DeviceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // automaticallyImplyLeading: false,
-        title: Text(widget.device.name),
-        actions: <Widget>[
-          StreamBuilder<BluetoothDeviceState>(
-            stream: widget.device.state,
-            initialData: BluetoothDeviceState.connecting,
-            builder: (c, snapshot) {
-              VoidCallback? onPressed;
-              String text;
-              switch (snapshot.data) {
-                case BluetoothDeviceState.connected:
-                  onPressed = () => widget.device.disconnect();
-                  text = 'DISCONNECT';
-                  break;
-                case BluetoothDeviceState.disconnected:
-                  onPressed = () => widget.device.connect();
-                  text = 'CONNECT';
-                  break;
-                default:
-                  onPressed = null;
-                  text = snapshot.data.toString().substring(21).toUpperCase();
-                  break;
-              }
-              return TextButton(
-                  onPressed: onPressed,
-                  child: Text(
-                    text,
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .button
-                        ?.copyWith(color: Colors.white),
-                  ));
-            },
-          )
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(200.0),
+        child: AppBar(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(60.0),
+                  bottomRight: Radius.circular(60.0))),
+          title: Text(widget.device.name),
+          flexibleSpace: ClipRRect(
+            borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(60.0),
+                bottomRight: Radius.circular(60.0)),
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(
+                  widget.name ?? "assets/cr12.jpg",
+                ),
+              )),
+            ),
+          ),
+          actions: <Widget>[
+            StreamBuilder<BluetoothDeviceState>(
+              stream: widget.device.state,
+              initialData: BluetoothDeviceState.connecting,
+              builder: (c, snapshot) {
+                VoidCallback? onPressed;
+                String text;
+                switch (snapshot.data) {
+                  case BluetoothDeviceState.connected:
+                    onPressed = () => widget.device.disconnect();
+                    text = 'DISCONNECT';
+                    break;
+                  case BluetoothDeviceState.disconnected:
+                    onPressed = () => widget.device.connect();
+                    text = 'CONNECT';
+                    break;
+                  default:
+                    onPressed = null;
+                    text = snapshot.data.toString().substring(21).toUpperCase();
+                    break;
+                }
+                return TextButton(
+                    onPressed: onPressed,
+                    child: Text(
+                      text,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .button
+                          ?.copyWith(color: Colors.white),
+                    ));
+              },
+            )
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -99,7 +120,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
               initialData: BluetoothDeviceState.connecting,
               builder: (c, snapshot) => ListTile(
                 title: Text(
-                  '  ${widget.device.name} is ${snapshot.data.toString().split('.')[1]}',
+                  '${widget.device.name} is ${snapshot.data.toString().split('.')[1]}',
                 ),
                 subtitle: Text('  ${widget.device.hashCode}'),
                 trailing: StreamBuilder<bool>(
@@ -118,7 +139,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                           //   valueColor: AlwaysStoppedAnimation(Colors.grey),
                           // ),
                           width: 18.0,
-                          height: 18.0,
+                          height: .0,
                         ),
                         onPressed: null,
                       )

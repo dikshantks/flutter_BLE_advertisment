@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:panorama/panorama.dart';
@@ -14,6 +16,17 @@ class Maingate extends StatefulWidget {
 }
 
 class _MaingateState extends State<Maingate> {
+  final List topic = [
+    "BLE/advertisment and tour",
+    "Smart MOnitoring and Navigation of Students",
+    "Contactless Healthcare Companion using IOT",
+    "IOT Based Laundary Management System",
+    "Restaurant Management",
+    "Energy Meter",
+    "IOT In Smart Agriculture",
+    "Smart Waste Management System",
+    "Personalized Advertisement Based on Location",
+  ];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,19 +51,38 @@ class _MaingateState extends State<Maingate> {
             indent: 25.0,
           ),
           SizedBox(
-            height: 20.0,
+            height: 15.0,
           ),
           Container(
             child: Text(
               " WELCOME TO NIIT\n",
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontSize: 15.0),
             ),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.90,
             child: Text(
                 textAlign: TextAlign.justify,
-                "NIIT University's peaceful, lush green campus leaves our students spellbound. It is unlike any campus they have seen before. Certainly not one situated in a desert landscape. The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
+                "NIIT University's peaceful, lush green campus leaves our students spellbound. Certainly not one situated in a desert landscape. The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Center(
+              child: Text("List of Projects"),
+            ),
+          ),
+          Divider(
+            thickness: 1.0,
+            endIndent: 25.0,
+            indent: 25.0,
+          ),
+          Container(
+            height: 300.0,
+            child: ListView.builder(
+                itemCount: topic.length,
+                itemBuilder: ((context, index) => ListTile(
+                      title: Text(topic[index]),
+                    ))),
           )
         ],
       ),
@@ -89,12 +121,12 @@ class _CR101State extends State<CR101> {
             indent: 25.0,
           ),
           Container(
-            child: Text("Welcome to NIIT"),
+            child: Text("Welcome to ECE-LAB I"),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.90,
             child: Text(
-                "NIIT University's peaceful, lush green campus leaves our students spellbound. It is unlike any campus they have seen before. Certainly not one situated in a desert landscape. The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
+                "NIIT University's  ECE-LAB is peaceful . The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
           ),
         ],
       ),
@@ -189,17 +221,12 @@ class _NothinginitState extends State<Nothinginit> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              // color: Colors.red,
-              height: 200.0,
-              width: 200.0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(400.0)),
-                child: Image.asset(
-                  "assets/cr12.jpeg",
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+                // color: Colors.red,
+                height: 200.0,
+                width: 200.0,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(400.0)),
+                    child: Image.asset("assets/cr12.jpg"))),
             Text(
               "\n Nothing to see here.",
               style: TextStyle(fontSize: 25.0),
@@ -226,6 +253,9 @@ class _PanoramState extends State<Panoram> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(127, 58, 69, 105),
+        shadowColor: Colors.transparent,
+        foregroundColor: Colors.white,
         title: Text(widget.name),
       ),
       body:

@@ -24,7 +24,7 @@ class _welcomeState extends State<welcome> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const Text(
-            "welcome",
+            "Virtual Tour",
             style: TextStyle(fontSize: 32.0),
           ),
           Container(
