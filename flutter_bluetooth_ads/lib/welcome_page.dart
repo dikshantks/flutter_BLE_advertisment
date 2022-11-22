@@ -1,10 +1,7 @@
-// import 'dart:js';
-
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_ads/one.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class welcome extends StatefulWidget {
   const welcome({super.key});
@@ -65,3 +62,5 @@ class _welcomeState extends State<welcome> {
     ));
   }
 }
+
+

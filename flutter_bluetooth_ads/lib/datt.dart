@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:panorama/panorama.dart';
-import 'package:simple_url_preview/simple_url_preview.dart';
+// import 'package:simple_url_preview/simple_url_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Maingate extends StatefulWidget {
@@ -59,13 +57,13 @@ class _MaingateState extends State<Maingate> {
               style: TextStyle(fontSize: 15.0),
             ),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
             child: Text(
                 textAlign: TextAlign.justify,
                 "NIIT University's peaceful, lush green campus leaves our students spellbound. Certainly not one situated in a desert landscape. The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: Center(
               child: Text("List of Projects"),
@@ -76,7 +74,7 @@ class _MaingateState extends State<Maingate> {
             endIndent: 25.0,
             indent: 25.0,
           ),
-          Container(
+          SizedBox(
             height: 300.0,
             child: ListView.builder(
                 itemCount: topic.length,
@@ -123,7 +121,7 @@ class _CR101State extends State<CR101> {
           Container(
             child: Text("Welcome to ECE-LAB I"),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
             child: Text(
                 "NIIT University's  ECE-LAB is peaceful . The abundant greenery, vast open spaces, and pure air leaves them enthralled"),
@@ -172,7 +170,7 @@ class _CR202State extends State<CR202> {
                   fontSize: 25.0, decoration: TextDecoration.underline),
             ),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.90,
             child: Text(
                 "siNUsoid, NIIT University's tech fest, is where we rejuvenate intuitive learning. Our main goal is to make the majority of our theoretical knowledge comprehensible and applicable for students, while attempting to intensify their interest in learning. To bridge the gap between the academic and practical worlds, we wish to showcase the extensive technical knowledge of students all over the world."),
@@ -213,14 +211,14 @@ class _NothinginitState extends State<Nothinginit> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Center(
-          child: Container(
+          child: SizedBox(
         height: 300.0,
         width: 250.0,
         // color: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
                 // color: Colors.red,
                 height: 200.0,
                 width: 200.0,

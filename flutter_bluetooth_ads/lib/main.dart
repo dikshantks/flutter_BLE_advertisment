@@ -5,11 +5,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:flutter_bluetooth_ads/datt.dart';
+// import 'package:flutter_bluetooth_ads/datt.dart';
 import 'package:flutter_bluetooth_ads/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:simple_url_preview/simple_url_preview.dart';
+// import 'package:simple_url_preview/simple_url_preview.dart';
 import 'device.dart';
 import 'firebase_options.dart';
 
