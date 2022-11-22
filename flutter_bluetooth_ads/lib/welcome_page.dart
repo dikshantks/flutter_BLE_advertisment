@@ -55,12 +55,10 @@ class _welcomeState extends State<welcome> {
                 ),
               );
             },
-            child: Text("Explore"),
+            child: Text("Exploe"), // chagne this
           )
         ],
       ),
     ));
   }
 }
-
-
