@@ -146,11 +146,9 @@ class FirstPageState extends State<FirstPage> {
               child: Container(
                 margin: EdgeInsets.all(20.0),
                 width: double.infinity,
-                // color: Colors.amber,
                 child: InteractiveViewer(
                   child: Stack(children: [
                     SizedBox(
-                      // color: Colors.red,
                       width: 300.0,
                       height: 700.0,
                       child: Image.asset(

@@ -131,7 +131,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     children: const <Widget>[
                       // IconButton(
                       //   icon: Icon(Icons.refresh),
-                      //   // onPressed: () => widget.device.discoverServices(),
+                      //   onPressed: () => widget.device.discoverServices(),
                       // ),
                       IconButton(
                         icon: SizedBox(
