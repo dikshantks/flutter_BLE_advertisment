@@ -10,37 +10,58 @@ class BeaconDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(defaultPadding),
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(
               height: 30.0,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "BEACON ID: PX34ASD123 ",
+                  style: GoogleFonts.roboto(
+                    fontSize: 25.0,
+                    color: Colors.white70,
+                  ),
+                ),
+                Text(
+                  "FOOTFALL: 23 ",
+                  style: GoogleFonts.roboto(
+                    fontSize: 25.0,
+                    color: Colors.white70,
+                  ),
+                ),
+              ],
+            ),
             Flexible(
+                child: Container(
+              padding: const EdgeInsets.all(10.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "BEACON ID: PX34ASD123 ",
-                    style: GoogleFonts.roboto(
-                      fontSize: 25.0,
-                      color: Colors.white70,
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "NEW NAME",
+                              style: GoogleFonts.roboto(fontSize: 30.0),
+                            ),
+                          ]),
                     ),
                   ),
-                  Text(
-                    "FOOTFALL: 23 ",
-                    style: GoogleFonts.roboto(
-                      fontSize: 25.0,
-                      color: Colors.white70,
-                    ),
-                  ),
+                  Expanded(
+                    child: Container(),
+                  )
                 ],
               ),
-            ),
-            Flexible(child: Container()),
+            )),
           ],
         ),
       ),
