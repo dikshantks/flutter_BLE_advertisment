@@ -1,13 +1,20 @@
-class User {
+class Admin {
+  int adminid;
   String name;
-  String userid;
-  String email;
   String password;
+  String email;
 
-  User({
+  Admin({
+    required this.adminid,
     required this.name,
-    required this.email,
     required this.password,
-    required this.userid,
+    required this.email,
   });
+
+  factory Admin.fromjson(Map<String, dynamic> json) => Admin(
+        adminid: json["admin_id"],
+        name: json["name"],
+        password: json["password"],
+        email: json["email"],
+      );
 }

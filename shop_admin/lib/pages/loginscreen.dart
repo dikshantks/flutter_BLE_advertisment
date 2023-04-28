@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shop_admin/mysql.dart';
 import 'package:shop_admin/pages/controllpanel.dart';
 import '../api.dart';
 import '../components/logintextfield.dart';
 import 'package:http/http.dart' as https;
+
+import '../providers/admin_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,10 +18,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var emailcontroller = TextEditingController();
   var passwordcontroller = TextEditingController();
-  final db = Mysql();
   String email = "", password = "";
 
-  Future<void> signIn() async {
+  Future<String?> signIn() async {
+    final BuildContext context = this.context;
+
     try {
       final String email = emailcontroller.text.trim();
       final String password = passwordcontroller.text.trim();
@@ -36,19 +38,41 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response['success']) {
         // Navigate to next screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ControllPanel()),
-        );
+        print(response);
+        AdminProvider.setAdminFromJson(context, response);
+        return null;
       } else {
-        // Show error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response['message'])),
-        );
+        return response['message'];
       }
     } catch (e) {
       print(e);
     }
+
+    return "error occured please try again ";
+  }
+
+  void signInAndNavigate() {
+    // Store a reference to the BuildContext
+    final BuildContext context = this.context;
+
+    // Call the signIn function and wait for it to complete
+    signIn().then((String? error) {
+      if (error == null) {
+        // Navigate to next screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ControllPanel()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              error,
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -97,10 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 60.0,
                   ),
                   ElevatedButton(
-                      child: Text("Login"),
-                      onPressed: () {
-                        signIn();
-                      }),
+                    child: Text("Login"),
+                    onPressed: signInAndNavigate,
+                  ),
                 ],
               ),
             ),
