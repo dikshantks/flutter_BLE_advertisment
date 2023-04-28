@@ -98,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                       child: Text("Login"),
-                      // controller: _btnController,
                       onPressed: () {
                         signIn();
                       }),
