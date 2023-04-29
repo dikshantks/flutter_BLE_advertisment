@@ -2,9 +2,9 @@ class Beacon {
   final int beaconId;
   final String beaconName;
   final int footfall;
-  final String heading;
-  final String offers;
-  final String url;
+  final String? heading;
+  final String? offers;
+  final String? url;
 
   Beacon({
     required this.beaconId,
