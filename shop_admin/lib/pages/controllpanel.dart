@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_admin/constants.dart';
 import 'package:shop_admin/models/admin.dart';
+import 'package:shop_admin/pages/dashboard.dart';
 import 'package:shop_admin/providers/admin_provider.dart';
 import 'package:shop_admin/providers/beacon_provider.dart';
 
@@ -25,11 +27,12 @@ class _ControllPanelState extends State<ControllPanel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Expanded(
+              flex: 2,
               child: sideBar(),
             ),
             Expanded(
-              flex: 5,
-              child: selectedBeacon != null ? BeaconDashboard() : Container(),
+              flex: 7,
+              child: selectedBeacon != null ? BeaconDashboard() : HomePage(),
             ),
           ],
         ),
@@ -53,17 +56,19 @@ class sideBar extends StatelessWidget {
     final List<Beacon> beacons = Provider.of<BeaconProvider>(context).beacons;
 
     return Drawer(
+      backgroundColor: kblack,
       child: Column(
         children: [
           DrawerHeader(
-            child: GestureDetector(
+            child: InkWell(
               onTap: () {
                 Provider.of<BeaconProvider>(context, listen: false)
                     .selectBeacon(null);
               },
               child: Image.asset(
-                "assets/logo.png",
-                cacheHeight: 300,
+                "assets/logo.jpeg",
+                cacheHeight: 400,
+                colorBlendMode: BlendMode.multiply,
               ),
             ),
           ),
@@ -72,10 +77,13 @@ class sideBar extends StatelessWidget {
             child: ListView.builder(
               itemCount: beacons.length,
               itemBuilder: (context, index) => DrawerListTile(
-                title: "${current.name} ${index}",
+                title: beacons[index].beaconName,
+                subtitle: "UID: ${beacons[index].beaconId}",
                 press: () {
                   Provider.of<BeaconProvider>(context, listen: false)
-                      .selectBeacon(beacons[index]);
+                      .selectBeacon(
+                    beacons[index],
+                  );
                 },
               ),
             ),
