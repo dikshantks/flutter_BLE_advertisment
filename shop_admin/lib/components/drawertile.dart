@@ -39,13 +39,11 @@ class _DrawerListTileState extends State<DrawerListTile> {
         widget.press();
       },
       // horizontalTitleGap: 0.0,
-      // leading: Icon(Icons.radar),
-      leading: AnimatedIcon(
-        icon: AnimatedIcons.menu_close,
-        progress: widget.selected
-            ? AlwaysStoppedAnimation(1)
-            : AlwaysStoppedAnimation(0),
+      leading: Icon(
+        Icons.radar_sharp,
+        size: 40.0,
       ),
+
       subtitle: Text(
         widget.subtitle,
         style: ralewayStyle.copyWith(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:shop_admin/constants.dart';
 import 'package:shop_admin/pages/controllpanel.dart';
+import 'package:shop_admin/responsive.dart';
 import '../api.dart';
 import '../components/logintextfield.dart';
 import 'package:http/http.dart' as https;
@@ -81,28 +82,41 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Row(
           children: [
-            Expanded(
-              flex: 4,
-              child: Container(
-                padding: const EdgeInsets.all(100),
-                color: kptext,
-                child: Center(
-                  child: RiveAnimation.asset("assets/rives/login.riv"),
-                ),
-              ),
-            ),
+            Responsive.isMobile(context)
+                ? Container()
+                : Expanded(
+                    flex: 4,
+                    child: Container(
+                      padding: const EdgeInsets.all(100),
+                      color: kptext,
+                      child: Center(
+                        child: RiveAnimation.asset("assets/rives/login.riv"),
+                      ),
+                    ),
+                  ),
             Expanded(
               flex: 2,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 height: height,
-                color: kwhite,
+                color: Responsive.isMobile(context)
+                    ? Colors.white.withAlpha(220)
+                    : kwhite,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: height * 0.2),
+                      Responsive.isMobile(context)
+                          ? Container(
+                              height: 300.0,
+                              margin: EdgeInsets.symmetric(vertical: 15.0),
+                              padding: const EdgeInsets.all(10.0),
+                              // color: kptext,
+                              child:
+                                  RiveAnimation.asset("assets/rives/login.riv"),
+                            )
+                          : SizedBox(height: height * 0.2),
                       RichText(
                         text: TextSpan(
                           children: [
@@ -148,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 10.0),
                       EmailField(
                           width: width, emailcontroller: emailcontroller),
-                      const SizedBox(height: 60.0),
+                      SizedBox(
+                          height: Responsive.isMobile(context) ? 20.0 : 60.0),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
@@ -163,11 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 6.0),
                       LoginField(
                           width: width, passwordcontroller: passwordcontroller),
-                      const SizedBox(
-                        height: 60.0,
-                      ),
+                      SizedBox(
+                          height: Responsive.isMobile(context) ? 20.0 : 60.0),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
+                        padding: const EdgeInsets.only(left: 20.0),
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
@@ -192,6 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
+                      if (Responsive.isMobile(context))
+                        SizedBox(
+                          height: 20,
+                        ),
                     ],
                   ),
                 ),

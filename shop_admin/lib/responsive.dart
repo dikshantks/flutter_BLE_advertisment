@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:flutter/material.dart';
 
 class Responsive extends StatelessWidget {
   final Widget mobile;
@@ -20,10 +21,10 @@ class Responsive extends StatelessWidget {
       MediaQuery.of(context).size.width >= 1100;
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-    if (_size.width >= 1100) {
+    final Size size = MediaQuery.of(context).size;
+    if (size.width >= 1100) {
       return desktop;
-    } else if (_size.width >= 950 && tablet != null) {
+    } else if (size.width >= 950 && tablet != null) {
       return tablet;
     } else {
       return mobile;

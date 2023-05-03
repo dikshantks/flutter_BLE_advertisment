@@ -9,6 +9,8 @@ import 'package:shop_admin/models/admin.dart';
 import 'package:shop_admin/models/beacons.dart';
 import 'package:shop_admin/providers/admin_provider.dart';
 import 'package:shop_admin/providers/beacon_provider.dart';
+import 'package:shop_admin/providers/drawer_provider.dart';
+import 'package:shop_admin/responsive.dart';
 
 import '../constants.dart';
 
@@ -37,9 +39,6 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
     Admin admin = Provider.of<AdminProvider>(context, listen: false).admin!;
 
     try {
-      // final String name = name.text.trim();
-      // final String heading= passwordcontroller.text.trim();
-
       final String name = nameController.text;
       final String heading = headingController.text;
       final String offer = offerController.text;
@@ -81,96 +80,216 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
         Provider.of<BeaconProvider>(context, listen: false).selectedBeacon!;
 
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "BEACON ID: ${selectedBeacon.beaconId} ",
-                  style: GoogleFonts.roboto(
-                    fontSize: 25.0,
-                    color: Colors.white70,
-                  ),
-                ),
-                Text(
-                  "FOOTFALL: 23 ",
-                  style: GoogleFonts.roboto(
-                    fontSize: 25.0,
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Flexible(
-              child: Container(
-                color: Colors.amber,
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          LoginTextField(
-                            hinttext: "one",
-                            labelText: "one",
-                            hidetext: false,
-                            controller: nameController,
-                            onChange: (value) {},
-                          ),
-                          LoginTextField(
-                            hinttext: "one",
-                            labelText: "one",
-                            hidetext: false,
-                            controller: headingController,
-                            onChange: (value) {},
-                          ),
-                          LoginTextField(
-                            hinttext: "one",
-                            labelText: "one",
-                            hidetext: false,
-                            controller: offerController,
-                            onChange: (value) {},
-                          ),
-                          LoginTextField(
-                            hinttext: "one",
-                            labelText: "one",
-                            hidetext: false,
-                            controller: urlController,
-                            onChange: (value) {},
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              update(selectedBeacon.beaconId);
-                            },
-                            child: Text("updateit"),
-                          ),
-                        ],
-                      ),
+      child: Container(
+        color: kblack.withAlpha(230),
+        child: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20.0,
+              ),
+              if (Responsive.isMobile(context))
+                Positioned(
+                  left: 20.0,
+                  child: IconButton(
+                    onPressed: context.read<ContrllerProvider>().controlMenu,
+                    icon: Icon(
+                      Icons.menu,
                     ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.white38,
+                  ),
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "BEACON ID: ${selectedBeacon.beaconId} ",
+                    style: ralewayStyle.copyWith(
+                        fontSize: 20.0, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "FOOTFALL: 23 ",
+                    style: ralewayStyle.copyWith(
+                        fontSize: 20.0, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          // color: Colors.amber,
+                          height: MediaQuery.of(context).size.height * .9,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                DataTable(
+                                  columns: [
+                                    DataColumn(
+                                      label: Text(
+                                        "Property",
+                                        style: ralewayStyle.copyWith(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Input",
+                                        style: ralewayStyle.copyWith(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Previous Data",
+                                        style: ralewayStyle.copyWith(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: [
+                                    DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Text(
+                                            "Name",
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          TextFormField(
+                                            controller: nameController,
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            "prev",
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Text(
+                                            "heading",
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          TextFormField(
+                                            controller: headingController,
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            "prev",
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Text(
+                                            "offers",
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          TextFormField(
+                                            controller: offerController,
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            'prev',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    DataRow(
+                                      cells: [
+                                        DataCell(
+                                          Text(
+                                            'WEBSITE',
+                                            style: ralewayStyle.copyWith(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          TextFormField(
+                                            controller: urlController,
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            ' gadmi',
+                                            style: ralewayStyle.copyWith(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    update(selectedBeacon.beaconId);
+                                  },
+                                  child: Text(
+                                    "updateit",
+                                    style: ralewayStyle.copyWith(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        child: Container(
+                          color: Colors.white38,
+                          child: Image.asset("assets/five.jpeg"),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
