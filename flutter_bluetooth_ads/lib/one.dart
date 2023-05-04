@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:flutter_blue/flutter_blue.dart";
@@ -15,8 +16,10 @@ import 'device.dart';
 
 // ignore: must_be_immutable
 class FirstPage extends StatefulWidget {
-  FirstPage({super.key, required this.user});
-  String user;
+  FirstPage({
+    super.key,
+  });
+  String user = "";
   @override
   State<FirstPage> createState() => FirstPageState();
 }
@@ -93,6 +96,7 @@ class FirstPageState extends State<FirstPage> {
   }
 
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       key: scaffoldKey,
       endDrawer: Drawer(
@@ -189,19 +193,26 @@ class FirstPageState extends State<FirstPage> {
         ),
       ),
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            // minRadius: 10.0,
-            foregroundColor: Colors.blueAccent,
-            backgroundImage: AssetImage("assets/cutee.gif"),
+        leading: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
           ),
-        ),
-        // foregroundColor: Color(0xff030027),
-        title: Container(
-          // color: Colors.amber,
-          margin: EdgeInsets.only(top: 50.0),
-          // child: Text("\n Hello \n ${widget.user}"),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+            child: Container(
+              width: 60,
+              height: 60,
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: Image.network(
+                user.photoURL!,
+              ),
+            ),
+          ),
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(100.0),
@@ -214,7 +225,7 @@ class FirstPageState extends State<FirstPage> {
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
               Text(
-                "${widget.user}",
+                user.displayName!,
                 style: TextStyle(
                   fontSize: 20.0,
                 ),

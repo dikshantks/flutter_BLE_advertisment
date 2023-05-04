@@ -46,7 +46,8 @@ class _ControllPanelState extends State<ControllPanel> {
               ),
             Expanded(
               flex: 7,
-              child: selectedBeacon != null ? BeaconDashboard() : const HomePage(),
+              child:
+                  selectedBeacon != null ? BeaconDashboard() : const HomePage(),
             ),
           ],
         ),

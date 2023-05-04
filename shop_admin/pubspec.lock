@@ -168,14 +168,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "04094f2eb032cbb06c6f6e8d3607edcfcb0455e2bb6cbc010cb01171dcb64e6d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   matcher:
     dependency: transitive
     description:
@@ -200,14 +192,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
-  mysql1:
-    dependency: "direct main"
-    description:
-      name: mysql1
-      sha256: "68aec7003d2abc85769bafa1777af3f4a390a90c31032b89636758ff8eb839e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.20.0"
   nested:
     dependency: transitive
     description:
@@ -288,14 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  pool:
-    dependency: transitive
-    description:
-      name: pool
-      sha256: "20fe868b6314b322ea036ba325e6fc0711a22948856475e2c2b6306e8ab39c2a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.1"
   process:
     dependency: transitive
     description:
@@ -324,26 +300,10 @@ packages:
     dependency: transitive
     description:
       name: rive_common
-      sha256: "12ea4a1ca1aa2ddeb2ef212afa20517d6c140a5deb32149c713912a7e6b7e26e"
+      sha256: "7c4be235d75c34a0f257b4487c0cc314188aa2f9a6c177d34f02df53d7c25831"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
-  rounded_loading_button:
-    dependency: "direct main"
-    description:
-      name: rounded_loading_button
-      sha256: ec4af194330ba688527749059b7c1a3d1ddda6c18794ec4b0696f0cb3b9784ff
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.27.7"
+    version: "0.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

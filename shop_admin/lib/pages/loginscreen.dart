@@ -6,7 +6,6 @@ import 'package:shop_admin/constants.dart';
 import 'package:shop_admin/pages/controllpanel.dart';
 import 'package:shop_admin/responsive.dart';
 import '../api.dart';
-import '../components/logintextfield.dart';
 import 'package:http/http.dart' as https;
 
 import '../providers/admin_provider.dart';
@@ -21,24 +20,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var emailcontroller = TextEditingController();
   var passwordcontroller = TextEditingController();
-  String email = "", password = "";
-
+  // String email = "", password = "";
   Future<String?> signIn() async {
     final BuildContext context = this.context;
-
     try {
       final String email = emailcontroller.text.trim();
       final String password = passwordcontroller.text.trim();
       final Map<String, String> body = {'email': email, 'password': password};
-
       final res = await https.post(
         Uri.parse(kSignInUrl),
         headers: kHeaders,
         body: jsonEncode(body),
       );
-
       final Map<String, dynamic> response = jsonDecode(res.body);
-
       if (response['success']) {
         // Navigate to next screen
         print(response);
@@ -82,18 +76,17 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Row(
           children: [
-            Responsive.isMobile(context)
-                ? Container()
-                : Expanded(
-                    flex: 4,
-                    child: Container(
-                      padding: const EdgeInsets.all(100),
-                      color: kptext,
-                      child: Center(
-                        child: RiveAnimation.asset("assets/rives/login.riv"),
-                      ),
-                    ),
+            if (!Responsive.isMobile(context))
+              Expanded(
+                flex: 4,
+                child: Container(
+                  padding: const EdgeInsets.all(100),
+                  color: kptext,
+                  child: Center(
+                    child: RiveAnimation.asset("assets/rives/login.riv"),
                   ),
+                ),
+              ),
             Expanded(
               flex: 2,
               child: Container(
@@ -138,7 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: height * 0.02),
+                      if (!Responsive.isMobile(context))
+                        SizedBox(height: height * 0.02),
                       Text(
                         'Enter your details to get sign in \nto your account.',
                         style: ralewayStyle.copyWith(
@@ -147,7 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: textColor,
                         ),
                       ),
-                      SizedBox(height: height * 0.064),
+                      Responsive.isMobile(context)
+                          ? const SizedBox(height: 20.0)
+                          : SizedBox(height: height * 0.064),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
@@ -292,7 +288,7 @@ class LoginField extends StatelessWidget {
         controller: passwordcontroller,
         decoration: InputDecoration(
           border: InputBorder.none,
-          suffixIcon: Icon(
+          suffixIcon: const Icon(
             Icons.looks,
             color: kptext,
           ),

@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: EdgeInsets.all(defaultPadding),
           child: Container(
-            child: SingleChildScrollView( 
+            child: SingleChildScrollView(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

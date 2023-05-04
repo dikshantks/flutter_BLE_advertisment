@@ -86,41 +86,42 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20.0,
-              ),
+              if (!Responsive.isMobile(context))
+                SizedBox(
+                  height: 20.0,
+                ),
               if (Responsive.isMobile(context))
-                Positioned(
-                  left: 20.0,
-                  child: IconButton(
-                    onPressed: context.read<ContrllerProvider>().controlMenu,
-                    icon: Icon(
-                      Icons.menu,
-                    ),
+                IconButton(
+                  onPressed: context.read<ContrllerProvider>().controlMenu,
+                  icon: Icon(
+                    Icons.menu,
                   ),
                 ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "BEACON ID: ${selectedBeacon.beaconId} ",
+                    "BEACON ID: ${selectedBeacon.beaconId}",
                     style: ralewayStyle.copyWith(
                         fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "FOOTFALL: 23 ",
+                    "FOOTFALL: ${selectedBeacon.footfall}",
                     style: ralewayStyle.copyWith(
                         fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              // const SizedBox(
+              //   height: 20.0,
+              // ),
               Flexible(
                 child: Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: Responsive.isMobile(context)
+                      ? EdgeInsets.all(0)
+                      : EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,17 +129,18 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          // color: Colors.amber,
+                          color: Colors.amber,
                           height: MediaQuery.of(context).size.height * .9,
                           child: SingleChildScrollView(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 DataTable(
                                   columns: [
                                     DataColumn(
                                       label: Text(
-                                        "Property",
+                                        "Fields",
                                         style: ralewayStyle.copyWith(
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.bold),
@@ -161,6 +163,7 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                       ),
                                     ),
                                   ],
+                                  //data row
                                   rows: [
                                     DataRow(
                                       cells: [
@@ -179,7 +182,7 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                         ),
                                         DataCell(
                                           Text(
-                                            "prev",
+                                            selectedBeacon.beaconName,
                                             style: ralewayStyle.copyWith(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -191,7 +194,7 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                       cells: [
                                         DataCell(
                                           Text(
-                                            "heading",
+                                            "Heading",
                                             style: ralewayStyle.copyWith(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -204,7 +207,7 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                         ),
                                         DataCell(
                                           Text(
-                                            "prev",
+                                            selectedBeacon.heading!,
                                             style: ralewayStyle.copyWith(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -216,7 +219,7 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                       cells: [
                                         DataCell(
                                           Text(
-                                            "offers",
+                                            "Offers",
                                             style: ralewayStyle.copyWith(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -229,7 +232,13 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                         ),
                                         DataCell(
                                           Text(
-                                            'prev',
+                                            selectedBeacon.offers == null
+                                                ? ""
+                                                : selectedBeacon.offers!,
+                                            style: ralewayStyle.copyWith(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -238,20 +247,23 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                       cells: [
                                         DataCell(
                                           Text(
-                                            'WEBSITE',
+                                            'Website',
                                             style: ralewayStyle.copyWith(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                         DataCell(
-                                          TextFormField(
+                                          Formfield(
+                                            width: 100.0,
                                             controller: urlController,
                                           ),
                                         ),
                                         DataCell(
                                           Text(
-                                            ' gadmi',
+                                            selectedBeacon.url == null
+                                                ? "not setted"
+                                                : selectedBeacon.url!,
                                             style: ralewayStyle.copyWith(
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.bold,
@@ -262,15 +274,38 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                     ),
                                   ],
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    update(selectedBeacon.beaconId);
-                                  },
-                                  child: Text(
-                                    "updateit",
-                                    style: ralewayStyle.copyWith(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
+                                Align(
+                                  widthFactor: 10.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, top: 40.0, bottom: 20.0),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () {
+                                          update(selectedBeacon.beaconId);
+                                        },
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        child: Ink(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30.0, vertical: 16.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                            color: Colors.blue.withGreen(100),
+                                          ),
+                                          child: Text(
+                                            'Update details',
+                                            style: ralewayStyle.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color: kwhite,
+                                              fontSize: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -278,12 +313,13 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.white38,
-                          child: Image.asset("assets/five.jpeg"),
-                        ),
-                      )
+                      if (Responsive.isDesktop(context))
+                        Expanded(
+                          child: Container(
+                            color: Colors.white38,
+                            child: Image.asset("assets/five.jpeg"),
+                          ),
+                        )
                     ],
                   ),
                 ),
@@ -338,3 +374,46 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
 //     );
 //   }
 // }
+
+class Formfield extends StatelessWidget {
+  const Formfield({
+    super.key,
+    required this.width,
+    required this.controller,
+  });
+
+  final double width;
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      height: 40.0,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: kblack2,
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding:
+              const EdgeInsets.only(left: 6.0, bottom: 5.0, right: 6.0),
+          hintText: 'enter details',
+          hintStyle: ralewayStyle.copyWith(
+            fontWeight: FontWeight.w400,
+            color: kwhite.withOpacity(0.2),
+            fontSize: 18.0,
+          ),
+        ),
+        style: ralewayStyle.copyWith(
+          fontWeight: FontWeight.w400,
+          color: kwhite.withOpacity(0.8),
+          fontSize: 18.0,
+        ),
+      ),
+    );
+  }
+}

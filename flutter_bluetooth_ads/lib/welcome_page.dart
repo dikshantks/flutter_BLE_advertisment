@@ -1,7 +1,11 @@
 // ignore_for_file: camel_case_types
 
+import 'package:auth_buttons/auth_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_ads/one.dart';
+import 'package:flutter_bluetooth_ads/signin_provider.dart';
+import 'package:provider/provider.dart';
 
 class welcome extends StatefulWidget {
   const welcome({super.key});
@@ -15,6 +19,7 @@ class _welcomeState extends State<welcome> {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         body: Center(
       child: Column(
@@ -45,18 +50,31 @@ class _welcomeState extends State<welcome> {
               ),
             ),
           ),
-          ElevatedButton(
+          // ElevatedButton(
+          //   onPressed: () {
+          //     // ignore: use_build_context_synchronously
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: ((context) => FirstPage()),
+          //       ),
+          //     );
+          //   },
+          //   child: Text(
+          //     "Explore",
+          //   ), // chagne this
+          // ),
+
+          GoogleAuthButton(
             onPressed: () {
-              // ignore: use_build_context_synchronously
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => FirstPage(user: _username.text)),
-                ),
-              );
+              final provider =
+                  Provider.of<SigninProvider>(context, listen: false);
+              provider.googleLogin();
             },
-            child: Text("Exploe"), // chagne this
-          )
+            style: const AuthButtonStyle(
+              buttonColor: Color(0xff111417),
+            ),
+          ),
         ],
       ),
     ));

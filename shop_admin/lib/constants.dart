@@ -7,6 +7,7 @@ const kptext = Color(0xff1A1F24);
 const kstext = Color(0xff95A1AC);
 
 const kblack = Color(0xff1A1F24);
+const kblack2 = Color.fromARGB(255, 31, 48, 65);
 const kwhite = Color.fromARGB(202, 236, 236, 236);
 
 const blueDarkColor = Color(0xff252B5C);
