@@ -7,7 +7,6 @@ import 'package:shop_admin/providers/admin_provider.dart';
 import 'package:shop_admin/providers/beacon_provider.dart';
 import 'package:shop_admin/providers/drawer_provider.dart';
 import 'package:shop_admin/responsive.dart';
-
 import '../components/drawertile.dart';
 import '../models/beacons.dart';
 import 'beacon_detail.dart';

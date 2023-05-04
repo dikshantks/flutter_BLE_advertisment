@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_admin/api.dart';
-import 'package:shop_admin/components/logintextfield.dart';
 import 'package:shop_admin/models/admin.dart';
 import 'package:shop_admin/models/beacons.dart';
 import 'package:shop_admin/providers/admin_provider.dart';
@@ -69,11 +66,8 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
     } catch (e) {
       print(e);
     }
-
-    // return "error occured please try again ";
   }
 
-  // Future<void> updateBeacon(
   @override
   Widget build(BuildContext context) {
     Beacon selectedBeacon =
@@ -89,13 +83,13 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (!Responsive.isMobile(context))
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
               if (Responsive.isMobile(context))
                 IconButton(
                   onPressed: context.read<ContrllerProvider>().controlMenu,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.menu,
                   ),
                 ),
@@ -105,177 +99,220 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                   Text(
                     "BEACON ID: ${selectedBeacon.beaconId}",
                     style: ralewayStyle.copyWith(
-                        fontSize: 20.0, fontWeight: FontWeight.bold),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
+                  if (Responsive.isMobile(context))
+                    Text(
+                      selectedBeacon.beaconName.toUpperCase(),
+                      style: ralewayStyle.copyWith(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   Text(
                     "FOOTFALL: ${selectedBeacon.footfall}",
                     style: ralewayStyle.copyWith(
-                        fontSize: 20.0, fontWeight: FontWeight.bold),
+                        fontSize: 20.0, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
-              // const SizedBox(
-              //   height: 20.0,
-              // ),
+              const SizedBox(
+                height: 20.0,
+              ),
               Flexible(
                 child: Container(
                   padding: Responsive.isMobile(context)
-                      ? EdgeInsets.all(0)
-                      : EdgeInsets.all(10.0),
+                      ? const EdgeInsets.all(0)
+                      : const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Container(
-                          color: Colors.amber,
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height * .9,
                           child: SingleChildScrollView(
                             child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                DataTable(
-                                  columns: [
-                                    DataColumn(
-                                      label: Text(
-                                        "Fields",
-                                        style: ralewayStyle.copyWith(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold),
+                                Container(
+                                  padding: EdgeInsets.all(defaultPadding),
+                                  decoration: BoxDecoration(
+                                    color: kblack2.withOpacity(0.1),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "EDIT changes",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
                                       ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Input",
-                                        style: ralewayStyle.copyWith(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Previous Data",
-                                        style: ralewayStyle.copyWith(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                  //data row
-                                  rows: [
-                                    DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            "Name",
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          TextFormField(
-                                            controller: nameController,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            selectedBeacon.beaconName,
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            "Heading",
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          TextFormField(
-                                            controller: headingController,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            selectedBeacon.heading!,
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            "Offers",
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          TextFormField(
-                                            controller: offerController,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            selectedBeacon.offers == null
-                                                ? ""
-                                                : selectedBeacon.offers!,
-                                            style: ralewayStyle.copyWith(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold,
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: DataTable(
+                                          horizontalMargin: 0,
+                                          columnSpacing: 10.0,
+                                          columns: const [
+                                            DataColumn(
+                                              label: Text("Fields"),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    DataRow(
-                                      cells: [
-                                        DataCell(
-                                          Text(
-                                            'Website',
-                                            style: ralewayStyle.copyWith(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Formfield(
-                                            width: 100.0,
-                                            controller: urlController,
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            selectedBeacon.url == null
-                                                ? "not setted"
-                                                : selectedBeacon.url!,
-                                            style: ralewayStyle.copyWith(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold,
+                                            DataColumn(
+                                              label: Text("Input"),
                                             ),
-                                          ),
+                                            DataColumn(
+                                              label: Text("Past data"),
+                                            ),
+                                          ],
+                                          rows: [
+                                            DataRow(
+                                              cells: [
+                                                DataCell(
+                                                  Text(
+                                                    "Name",
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Formfield(
+                                                    width: 100.0,
+                                                    controller: nameController,
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(
+                                                    selectedBeacon.beaconName,
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            DataRow(
+                                              cells: [
+                                                DataCell(
+                                                  Text(
+                                                    "Heading",
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Formfield(
+                                                    width: 100.0,
+                                                    controller:
+                                                        headingController,
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(
+                                                    selectedBeacon.heading!,
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            DataRow(
+                                              cells: [
+                                                DataCell(
+                                                  Text(
+                                                    "Offers",
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Formfield(
+                                                    width: 100.0,
+                                                    controller: offerController,
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(
+                                                    selectedBeacon.offers!,
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            DataRow(
+                                              cells: [
+                                                DataCell(
+                                                  Text(
+                                                    'Website',
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Formfield(
+                                                    width: 100.0,
+                                                    controller: urlController,
+                                                  ),
+                                                ),
+                                                DataCell(
+                                                  Text(
+                                                    selectedBeacon.url == null
+                                                        ? "not setted"
+                                                        : selectedBeacon.url!,
+                                                    style:
+                                                        ralewayStyle.copyWith(
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Align(
-                                  widthFactor: 10.0,
+                                  widthFactor:
+                                      Responsive.isMobile(context) ? 10.0 : 2,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         left: 20.0, top: 40.0, bottom: 20.0),
@@ -308,16 +345,27 @@ class _BeaconDashboardState extends State<BeaconDashboard> {
                                     ),
                                   ),
                                 ),
+                                if (Responsive.isMobile(context))
+                                  Container(
+                                    height: 500.0,
+                                    child: InteractiveViewer(
+                                      child: Image.network(
+                                          "https://firebasestorage.googleapis.com/v0/b/my-second-project-c7122.appspot.com/o/80.jpg?alt=media&token=0a812dbf-46a4-46d6-9e29-f64c15809118"),
+                                    ),
+                                  )
                               ],
                             ),
                           ),
                         ),
                       ),
-                      if (Responsive.isDesktop(context))
+                      if (!Responsive.isMobile(context))
                         Expanded(
                           child: Container(
-                            color: Colors.white38,
-                            child: Image.asset("assets/five.jpeg"),
+                            // color: Colors.white38,
+                            child: InteractiveViewer(
+                              child: Image.network(
+                                  "https://firebasestorage.googleapis.com/v0/b/my-second-project-c7122.appspot.com/o/80.jpg?alt=media&token=0a812dbf-46a4-46d6-9e29-f64c15809118"),
+                            ),
                           ),
                         )
                     ],

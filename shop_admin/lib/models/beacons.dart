@@ -5,6 +5,7 @@ class Beacon {
   final String? heading;
   final String? offers;
   final String? url;
+  final String? img;
 
   Beacon({
     required this.beaconId,
@@ -13,6 +14,7 @@ class Beacon {
     required this.heading,
     required this.offers,
     required this.url,
+    required this.img,
   });
 
   factory Beacon.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Beacon {
       heading: json['heading'],
       offers: json['offers'],
       url: json['url'],
+      img: json['image_url'],
     );
   }
 }
