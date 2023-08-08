@@ -8,6 +8,8 @@ A flutter app using BLE devices to navigate and advetise , Right now only works 
   * flutter_blue
   * panorama
   * permission_handler
+  * provider
+  * firebase_auth
   * firebase_core
   * url_launcher
   * flutter_local_notifications
